@@ -2,24 +2,21 @@ import React from 'react';
 import style from './Todo.module.css';
 import trash from '../assets/trash.png';
 import edit from '../assets/edit.png';
+import { CHANGE_TODO, DELETE_TODO } from '../utils/consts';
 
-const Todo = ({ id, text, setModal }) => {
+const Todo = ({ text, id, setModal }) => {
   return (
     <div className={style.todo}>
       <span>{text}</span>
       <div className={style.buttons}>
         <div
           className={style.button}
-          onClick={() =>
-            setModal({ type: 'CHANGE_TODO', isOpen: true, text: 'Изменить дело?', id })
-          }>
+          onClick={() => setModal({ isOpen: true, type: CHANGE_TODO, text: 'Изменить дело?', id })}>
           <img src={edit} alt="edit" />
         </div>
         <div
           className={style.button}
-          onClick={() =>
-            setModal({ type: 'DELETE_TODO', isOpen: true, text: 'Удалить дело?', id })
-          }>
+          onClick={() => setModal({ isOpen: true, type: DELETE_TODO, text: 'Удалить дело?', id })}>
           <img src={trash} alt="trash" />
         </div>
       </div>

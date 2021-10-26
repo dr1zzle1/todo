@@ -2,11 +2,11 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import Modal from './components/Modal';
 import Todo from './components/Todo';
-const ADD_TODO = 'ADD_TODO';
-function App() {
-  const [todos, setTodos] = useState([]);
-  const [modal, setModal] = useState({ isOpen: false, type: null });
+import { ADD_TODO } from './utils/consts';
 
+function App() {
+  const [modal, setModal] = useState({});
+  const [todos, setTodos] = useState([]);
   useEffect(() => {
     setTodos(JSON.parse(localStorage.getItem('todos')) || []);
   }, []);
@@ -35,10 +35,9 @@ function App() {
     }
   };
 
-  let todosItems = todos.map(({ id, text }) => (
-    <Todo key={id} id={id} text={text} setModal={setModal} />
+  let todosItems = todos.map((el) => (
+    <Todo id={el.id} key={el.id} text={el.text} setModal={setModal} />
   ));
-
   return (
     <div className="main">
       <h1 className="title">Список дел</h1>
@@ -48,8 +47,8 @@ function App() {
           addTodo={addTodo}
           deleteTodo={deleteTodo}
           changeTodo={changeTodo}
-          text={modal.text}
           id={modal.id}
+          text={modal.text}
           setModal={setModal}
         />
       )}

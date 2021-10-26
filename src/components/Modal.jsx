@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { ADD_TODO, CHANGE_TODO, DELETE_TODO } from '../utils/consts';
 import style from './Modal.module.css';
 
-const Modal = ({ text, type, addTodo, deleteTodo, changeTodo, id, setModal }) => {
+const Modal = ({ id, text, type, addTodo, changeTodo, deleteTodo, setModal }) => {
   const [todoText, setTodoText] = useState('');
   return (
     <div className={style.modal}>
       <div className={style.title}>{text}</div>
-      {(type === 'ADD_TODO' || type === 'CHANGE_TODO') && (
+      {(type === ADD_TODO || type === CHANGE_TODO) && (
         <input
           className={style.input}
           autoFocus={true}
@@ -14,23 +15,19 @@ const Modal = ({ text, type, addTodo, deleteTodo, changeTodo, id, setModal }) =>
           onChange={(e) => setTodoText(e.currentTarget.value)}
         />
       )}
-      <div className="buttons">
-        {type === 'ADD_TODO' ? (
-          <button className={style.button} onClick={() => addTodo(todoText)}>
-            Добавить
-          </button>
-        ) : type === 'DELETE_TODO' ? (
-          <button className={`${style.button} ${style.delete}`} onClick={() => deleteTodo(id)}>
-            Удалить
-          </button>
-        ) : type === 'CHANGE_TODO' ? (
+      <div className={style.buttons}>
+        {type === ADD_TODO && (
+          <button children="Добавить" className={style.button} onClick={() => addTodo(todoText)} />
+        )}
+        {type === CHANGE_TODO && (
           <button
-            className={`${style.button} ${style.delete}`}
-            onClick={() => changeTodo(id, todoText)}>
-            Изменить
-          </button>
-        ) : (
-          ''
+            children="Изменить"
+            className={style.button}
+            onClick={() => changeTodo(id, todoText)}
+          />
+        )}
+        {type === DELETE_TODO && (
+          <button children="Удалить" className={style.button} onClick={() => deleteTodo(id)} />
         )}
         <button
           className={`${style.button} ${style.cancel}`}
